@@ -84,5 +84,5 @@ for app_url in "${APP_URLS[@]}"; do
 done
 
 # add printers
-lpadmin -p Office1-Printer -E -v ipp://10.5.5.166:631/printers/Office_1_Printer -P "/Library/Printers/PPDs/Contents/Resources/HP Color LaserJet Pro MFP M477.gz"
-lpadmin -p Office2-Printer-Upstairs -E -v ipp://10.5.5.166:631/printers/Office_2_Printer_Upstairs -P "/Library/Printers/PPDs/Contents/Resources/HP Color LaserJet M553.gz"
+lpadmin -p Office-1-Printer -E -v ipp://10.5.5.241 -L "Office 1" -P "/Library/Printers/PPDs/Contents/Resources/HP Color LaserJet Pro MFP M477.gz"
+lpadmin -p Office-2-Printer-Upstairs -E -v ipp://10.5.5.238 -L "Office 2 - Upstairs" -P "/Library/Printers/PPDs/Contents/Resources/HP Color LaserJet M553.gz"
