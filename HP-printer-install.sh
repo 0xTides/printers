@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo softwareupdate --install-rosetta
-
 # Delete current printers
 lpstat -p | awk '{print $2}' | while read printer
 do
