@@ -1,18 +1,5 @@
 #!/bin/bash
 
-# Delete current printers
-lpstat -p | awk '{print $2}' | while read printer
-do
-echo "Deleting Printer:" $printer
-lpadmin -x $printer
-done
-
-# give rights to add printers
-/usr/bin/security authorizationdb write system.preferences.printing allow
-/usr/bin/security authorizationdb write system.print.operator allow
-/usr/sbin/dseditgroup -o edit -n /Local/Default -a everyone -t group lpadmin
-/usr/sbin/dseditgroup -o edit -n /Local/Default -a everyone -t group _lpadmin
-
 # Set constants
 LOG_DIR="/Users/Shared/Logging"
 PROCESSOR=$(uname -m)
@@ -93,7 +80,22 @@ for app_url in "${APP_URLS[@]}"; do
   fi
 done
 
-
 # add printers
 lpadmin -p Office-1-Printer -E -v ipp://10.5.5.241 -L "Office 1" -P "/Library/Printers/PPDs/Contents/Resources/HP Color LaserJet Pro MFP M477.gz"
 lpadmin -p Office-2-Printer-Upstairs -E -v ipp://10.5.5.238 -L "Office 2 - Upstairs" -P "/Library/Printers/PPDs/Contents/Resources/HP Color LaserJet M553.gz"
+
+# set chrome to print using OSX print options so a4 is default
+defaults write ~/Downloads/com.googleChrome DisablePrintPreview -bool TRUE
+
+# give rights to add printers
+/usr/bin/security authorizationdb write system.preferences.printing allow
+/usr/bin/security authorizationdb write system.print.operator allow
+/usr/sbin/dseditgroup -o edit -n /Local/Default -a everyone -t group lpadmin
+/usr/sbin/dseditgroup -o edit -n /Local/Default -a everyone -t group _lpadmin
+
+# Delete current printers
+lpstat -p | awk '{print $2}' | while read printer
+do
+echo "Deleting Printer:" $printer
+lpadmin -x $printer
+done
