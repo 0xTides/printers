@@ -99,3 +99,6 @@ defaults write ~/Downloads/com.googleChrome DisablePrintPreview -bool TRUE
 /usr/bin/security authorizationdb write system.print.operator allow
 /usr/sbin/dseditgroup -o edit -n /Local/Default -a everyone -t group lpadmin
 /usr/sbin/dseditgroup -o edit -n /Local/Default -a everyone -t group _lpadmin
+
+# Set the default print mode to system dialog
+defaults write com.google.Chrome DisablePrintPreview -bool true
