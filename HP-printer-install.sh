@@ -15,9 +15,6 @@ done
 /usr/sbin/dseditgroup -o edit -n /Local/Default -a everyone -t group lpadmin
 /usr/sbin/dseditgroup -o edit -n /Local/Default -a everyone -t group _lpadmin
 
-
-# Install PKG - HP printer drivers
-
 # Set constants
 LOG_DIR="/Users/Shared/Logging"
 PROCESSOR=$(uname -m)
@@ -53,6 +50,12 @@ install_dmg_app() {
 install_pkg_app() {
   url="$1"
   pkg_name="$(basename "$url")"
+
+  # Check if package is already installed
+  if pkgutil --pkgs | grep -q "com.hp.printer.essentials"; then
+    echo "Package $pkg_name is already installed"
+    return 0
+  fi
 
   echo "Installing $pkg_name..."
   curl --silent --location --remote-name "$url"
@@ -91,6 +94,7 @@ for app_url in "${APP_URLS[@]}"; do
     echo "Unsupported application format for $app_url"
   fi
 done
+
 
 # add printers
 lpadmin -p Office-1-Printer -E -v ipp://10.5.5.241 -L "Office 1" -P "/Library/Printers/PPDs/Contents/Resources/HP Color LaserJet Pro MFP M477.gz"
