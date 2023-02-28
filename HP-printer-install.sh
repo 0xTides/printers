@@ -80,6 +80,13 @@ for app_url in "${APP_URLS[@]}"; do
   fi
 done
 
+# Delete current printers
+lpstat -p | awk '{print $2}' | while read printer
+do
+echo "Deleting Printer:" $printer
+lpadmin -x $printer
+done
+
 # add printers
 lpadmin -p Office-1-Printer -E -v ipp://10.5.5.241 -L "Office 1" -P "/Library/Printers/PPDs/Contents/Resources/HP Color LaserJet Pro MFP M477.gz"
 lpadmin -p Office-2-Printer-Upstairs -E -v ipp://10.5.5.238 -L "Office 2 - Upstairs" -P "/Library/Printers/PPDs/Contents/Resources/HP Color LaserJet M553.gz"
@@ -92,10 +99,3 @@ defaults write ~/Downloads/com.googleChrome DisablePrintPreview -bool TRUE
 /usr/bin/security authorizationdb write system.print.operator allow
 /usr/sbin/dseditgroup -o edit -n /Local/Default -a everyone -t group lpadmin
 /usr/sbin/dseditgroup -o edit -n /Local/Default -a everyone -t group _lpadmin
-
-# Delete current printers
-lpstat -p | awk '{print $2}' | while read printer
-do
-echo "Deleting Printer:" $printer
-lpadmin -x $printer
-done
