@@ -91,8 +91,6 @@ done
 lpadmin -p Office-1-Printer -E -v ipp://10.5.5.241 -L "Office 1" -P "/Library/Printers/PPDs/Contents/Resources/HP Color LaserJet Pro MFP M477.gz"
 lpadmin -p Office-2-Printer-Upstairs -E -v ipp://10.5.5.238 -L "Office 2 - Upstairs" -P "/Library/Printers/PPDs/Contents/Resources/HP Color LaserJet M553.gz"
 
-# set chrome to print using OSX print options so a4 is default
-defaults write ~/Downloads/com.googleChrome DisablePrintPreview -bool TRUE
 
 # give rights to add printers
 /usr/bin/security authorizationdb write system.preferences.printing allow
